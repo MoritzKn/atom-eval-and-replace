@@ -1,5 +1,7 @@
 # eval-and-replace
 
+[![Build Status](https://travis-ci.org/MoritzKn/atom-eval-and-replace.svg?branch=master)](https://travis-ci.org/MoritzKn/atom-eval-and-replace)
+
 Execute CoffeeScript, JS or shell code from the [Atom](https://atom.io) editor and replace the code with the result.
 
 ## Install
@@ -17,15 +19,15 @@ apm install eval-and-replace
 **Be careful with `eval-and-replace:shell`; nobody will prevent you from executing `rm -rf /`!**
 
 ## Shell environment variables
-When executing shell code with `eval-and-replace:shell` you have access to this variables:
+When executing shell code with `eval-and-replace:shell` you have access to these variables:
 * `FILE_PATH`: path to of the currently opened file
 * `FILE_NAME`: name of the currently opened file
 * `PROJEKT`: path to the Atom project
 
 ## CoffeeScript / JS Context
 CoffeeScript / JS code is executed in its own context, this means you can only use ECMAScript
-functions (i.e. no`require`). For all selections the same context is used, so you can reuse variables.
-Also you have exis to these functions and variables:
+functions (i.e. no`require`). But the same context is used for all selections, so you can reuse
+variables. Also you have access to these functions and variables:
 
 * `i`, `j`, `n`, `x`, `y`, `z`: initialized with `0`
 * `filePath`: path to of the currently opened file
