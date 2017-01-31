@@ -1,0 +1,8 @@
+{
+    "atom-workspace atom-text-editor:not([mini])": {
+        "ctrl-shift-e ctrl-shift-c": "eval-and-replace:coffee",
+        "ctrl-shift-e ctrl-shift-j": "eval-and-replace:js",
+        "ctrl-shift-e ctrl-shift-s": "eval-and-replace:shell",
+        "ctrl-k ctrl-e": "eval-and-replace:coffee"
+    }
+}
