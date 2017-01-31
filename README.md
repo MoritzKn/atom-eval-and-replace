@@ -45,3 +45,7 @@ variables. Also you have access to these functions and variables:
 * `floor()`: alias for `Math.floor()`
 * `ceil()`: alias for `Math.ceil()`
 * `round()`: alias for `Math.round()`
+
+## License
+This project is licensed under the terms of the MIT license. A copy of the license can 
+be found in the root directory of the project in the file [LICENSE.md](./LICENSE.md).
