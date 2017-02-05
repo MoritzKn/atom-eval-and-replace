@@ -4,6 +4,14 @@
 
 Execute CoffeeScript, JavaScript or Shell code from the [Atom](https://atom.io) editor and replace the code with the result.
 
+![calc](https://raw.githubusercontent.com/MoritzKn/atom-eval-and-replace/master/doc/git.gif)
+
+![calc](https://raw.githubusercontent.com/MoritzKn/atom-eval-and-replace/master/doc/calc.gif)
+
+![calc](https://raw.githubusercontent.com/MoritzKn/atom-eval-and-replace/master/doc/count.gif)
+
+![calc](https://raw.githubusercontent.com/MoritzKn/atom-eval-and-replace/master/doc/url.gif)
+
 ## Install
 ```sh
 apm install eval-and-replace
