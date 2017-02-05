@@ -228,7 +228,7 @@ describe('EvalAndReplace', () => {
 
             atom.commands.dispatch(workspaceElement, 'eval-and-replace:shell');
 
-            expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toMatch(/^(\/|\w:\\)/);
+            expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]]).trim()).not.toBe('');
         });
 
         it('provides a variable for the path of the open file', () => {
