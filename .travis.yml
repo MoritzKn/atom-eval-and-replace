@@ -16,7 +16,7 @@ os:
 script:
   - curl -s -O https://raw.githubusercontent.com/atom/ci/master/build-package.sh
   - chmod u+x build-package.sh
-  - ./build-package.sh && echo "Linting package using JSHint..." && node_modules/.bin/jshint src/**js spec/**js
+  - ./build-package.sh && echo "Linting package using JSHint..." && npm run lint
 
 notifications:
   email:

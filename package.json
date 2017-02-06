@@ -15,10 +15,14 @@
   "homepage": "https://github.com/MoritzKn/atom-eval-and-replace#readme",
   "keywords": [
     "atom",
-    "eval"
+    "eval",
+    "replace"
   ],
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
+  },
+  "scripts": {
+    "lint": "node_modules/.bin/jshint lib/**js spec/**js"
   },
   "dependencies": {
     "coffee-script": "^1.12.3"
