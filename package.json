@@ -2,8 +2,11 @@
   "name": "eval-and-replace",
   "main": "./lib/eval-and-replace",
   "version": "1.0.0",
-  "description": "Execute CoffeeScript, JavaScript or Shell code from the Atom editor and replace the code with the result.",
-  "repository": "https://github.com/moritzkn/eval-and-replace",
+  "description": "Execute CoffeeScript, JavaScript or Shell code from the Atom editor and replace the code with the result",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:MoritzKn/atom-eval-and-replace.git"
+  },
   "author": "Moritz Kneilmann <moritz.kneilmann@gmx.de>",
   "license": "MIT",
   "bugs": {
