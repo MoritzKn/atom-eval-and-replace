@@ -25,5 +25,12 @@
   },
   "devDependencies": {
     "jshint": "^2.9.4"
+  },
+  "activationCommands": {
+    "atom-workspace atom-text-editor:not([mini])": [
+      "eval-and-replace:coffee",
+      "eval-and-replace:js",
+      "eval-and-replace:shell"
+    ]
   }
 }

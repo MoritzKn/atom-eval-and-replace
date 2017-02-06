@@ -2,7 +2,7 @@
 /* globals waitsForPromise */
 
 describe('EvalAndReplace', () => {
-    let workspaceElement, editor;
+    let workspaceElement, editorElement, editor, activationPromise;
 
     beforeEach(() => {
         workspaceElement = atom.views.getView(atom.workspace);
@@ -11,8 +11,10 @@ describe('EvalAndReplace', () => {
 
         runs(() => {
             editor = atom.workspace.getActiveTextEditor();
+            editorElement = atom.views.getView(editor);
+            activationPromise = atom.packages.activatePackage('eval-and-replace');
+
             editor.setText('');
-            atom.packages.activatePackage('eval-and-replace');
         });
     });
 
@@ -27,32 +29,36 @@ describe('EvalAndReplace', () => {
             editor.buffer.append('(parseInt "80") * 5\n');
             editor.addSelectionForBufferRange([[3, 0], [3, 19]]);
 
-            atom.commands.dispatch(workspaceElement, 'eval-and-replace:coffee');
+            atom.commands.dispatch(editorElement, 'eval-and-replace:coffee');
 
-            const selectionRanges = editor.getSelections().map(s => s.getBufferRange());
-            expect(editor.buffer.getTextInRange([[0, 0], [0, 2]])).toBe('57');
-            expect(selectionRanges[1].start.row).toBe(0);
-            expect(selectionRanges[1].start.column).toBe(0);
-            expect(selectionRanges[1].end.row).toBe(0);
-            expect(selectionRanges[1].end.column).toBe(2);
+            waitsForPromise(() => activationPromise);
 
-            expect(editor.buffer.getTextInRange([[1, 0], [1, 2]])).toBe('25');
-            expect(selectionRanges[2].start.row).toBe(1);
-            expect(selectionRanges[2].start.column).toBe(0);
-            expect(selectionRanges[2].end.row).toBe(1);
-            expect(selectionRanges[2].end.column).toBe(2);
+            runs(() => {
+                const selectionRanges = editor.getSelections().map(s => s.getBufferRange());
+                expect(editor.buffer.getTextInRange([[0, 0], [0, 2]])).toBe('57');
+                expect(selectionRanges[1].start.row).toBe(0);
+                expect(selectionRanges[1].start.column).toBe(0);
+                expect(selectionRanges[1].end.row).toBe(0);
+                expect(selectionRanges[1].end.column).toBe(2);
 
-            expect(editor.buffer.getTextInRange([[2, 0], [2, 1]])).toBe('4');
-            expect(selectionRanges[3].start.row).toBe(2);
-            expect(selectionRanges[3].start.column).toBe(0);
-            expect(selectionRanges[3].end.row).toBe(2);
-            expect(selectionRanges[3].end.column).toBe(1);
+                expect(editor.buffer.getTextInRange([[1, 0], [1, 2]])).toBe('25');
+                expect(selectionRanges[2].start.row).toBe(1);
+                expect(selectionRanges[2].start.column).toBe(0);
+                expect(selectionRanges[2].end.row).toBe(1);
+                expect(selectionRanges[2].end.column).toBe(2);
 
-            expect(editor.buffer.getTextInRange([[3, 0], [3, 3]])).toBe('400');
-            expect(selectionRanges[4].start.row).toBe(3);
-            expect(selectionRanges[4].start.column).toBe(0);
-            expect(selectionRanges[4].end.row).toBe(3);
-            expect(selectionRanges[4].end.column).toBe(3);
+                expect(editor.buffer.getTextInRange([[2, 0], [2, 1]])).toBe('4');
+                expect(selectionRanges[3].start.row).toBe(2);
+                expect(selectionRanges[3].start.column).toBe(0);
+                expect(selectionRanges[3].end.row).toBe(2);
+                expect(selectionRanges[3].end.column).toBe(1);
+
+                expect(editor.buffer.getTextInRange([[3, 0], [3, 3]])).toBe('400');
+                expect(selectionRanges[4].start.row).toBe(3);
+                expect(selectionRanges[4].start.column).toBe(0);
+                expect(selectionRanges[4].end.row).toBe(3);
+                expect(selectionRanges[4].end.column).toBe(3);
+            });
         });
     });
 
@@ -67,32 +73,36 @@ describe('EvalAndReplace', () => {
             editor.buffer.append('parseInt("80") * 5\n');
             editor.addSelectionForBufferRange([[3, 0], [3, 18]]);
 
-            atom.commands.dispatch(workspaceElement, 'eval-and-replace:js');
+            atom.commands.dispatch(editorElement, 'eval-and-replace:coffee');
 
-            const selectionRanges = editor.getSelections().map(s => s.getBufferRange());
-            expect(editor.buffer.getTextInRange([[0, 0], [0, 2]])).toBe('57');
-            expect(selectionRanges[1].start.row).toBe(0);
-            expect(selectionRanges[1].start.column).toBe(0);
-            expect(selectionRanges[1].end.row).toBe(0);
-            expect(selectionRanges[1].end.column).toBe(2);
+            waitsForPromise(() => activationPromise);
 
-            expect(editor.buffer.getTextInRange([[1, 0], [1, 2]])).toBe('25');
-            expect(selectionRanges[2].start.row).toBe(1);
-            expect(selectionRanges[2].start.column).toBe(0);
-            expect(selectionRanges[2].end.row).toBe(1);
-            expect(selectionRanges[2].end.column).toBe(2);
+            runs(() => {
+                const selectionRanges = editor.getSelections().map(s => s.getBufferRange());
+                expect(editor.buffer.getTextInRange([[0, 0], [0, 2]])).toBe('57');
+                expect(selectionRanges[1].start.row).toBe(0);
+                expect(selectionRanges[1].start.column).toBe(0);
+                expect(selectionRanges[1].end.row).toBe(0);
+                expect(selectionRanges[1].end.column).toBe(2);
 
-            expect(editor.buffer.getTextInRange([[2, 0], [2, 1]])).toBe('4');
-            expect(selectionRanges[3].start.row).toBe(2);
-            expect(selectionRanges[3].start.column).toBe(0);
-            expect(selectionRanges[3].end.row).toBe(2);
-            expect(selectionRanges[3].end.column).toBe(1);
+                expect(editor.buffer.getTextInRange([[1, 0], [1, 2]])).toBe('25');
+                expect(selectionRanges[2].start.row).toBe(1);
+                expect(selectionRanges[2].start.column).toBe(0);
+                expect(selectionRanges[2].end.row).toBe(1);
+                expect(selectionRanges[2].end.column).toBe(2);
 
-            expect(editor.buffer.getTextInRange([[3, 0], [3, 3]])).toBe('400');
-            expect(selectionRanges[4].start.row).toBe(3);
-            expect(selectionRanges[4].start.column).toBe(0);
-            expect(selectionRanges[4].end.row).toBe(3);
-            expect(selectionRanges[4].end.column).toBe(3);
+                expect(editor.buffer.getTextInRange([[2, 0], [2, 1]])).toBe('4');
+                expect(selectionRanges[3].start.row).toBe(2);
+                expect(selectionRanges[3].start.column).toBe(0);
+                expect(selectionRanges[3].end.row).toBe(2);
+                expect(selectionRanges[3].end.column).toBe(1);
+
+                expect(editor.buffer.getTextInRange([[3, 0], [3, 3]])).toBe('400');
+                expect(selectionRanges[4].start.row).toBe(3);
+                expect(selectionRanges[4].start.column).toBe(0);
+                expect(selectionRanges[4].end.row).toBe(3);
+                expect(selectionRanges[4].end.column).toBe(3);
+            });
         });
     });
 
@@ -102,9 +112,13 @@ describe('EvalAndReplace', () => {
                 editor.buffer.append('require("fs")\n');
                 editor.addSelectionForBufferRange([[0, 0], [0, Infinity]]);
 
-                atom.commands.dispatch(workspaceElement, 'eval-and-replace:' + type);
+                atom.commands.dispatch(editorElement, 'eval-and-replace:coffee');
 
-                expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe('require is not defined');
+                waitsForPromise(() => activationPromise);
+
+                runs(() => {
+                    expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe('require is not defined');
+                });
             });
 
             it('executes all selections in the same context', () => {
@@ -113,64 +127,92 @@ describe('EvalAndReplace', () => {
                 editor.buffer.append('foo + 2\n');
                 editor.addSelectionForBufferRange([[2, 0], [2, 7]]);
 
-                atom.commands.dispatch(workspaceElement, 'eval-and-replace:'  + type);
+                atom.commands.dispatch(editorElement, 'eval-and-replace:coffee');
 
-                expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe('40');
-                expect(editor.buffer.getTextInRange([[2, 0], [2, Infinity]])).toBe('42');
+                waitsForPromise(() => activationPromise);
+
+                runs(() => {
+                    expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe('40');
+                    expect(editor.buffer.getTextInRange([[2, 0], [2, Infinity]])).toBe('42');
+                });
             });
 
             it('provides aliases for math functions', () => {
                 editor.buffer.append('pow(15, 5)');
                 editor.addSelectionForBufferRange([[0, 0], [0, Infinity]]);
 
-                atom.commands.dispatch(workspaceElement, 'eval-and-replace:'  + type);
+                atom.commands.dispatch(editorElement, 'eval-and-replace:coffee');
 
-                expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe('759375');
+                waitsForPromise(() => activationPromise);
+
+                runs(() => {
+                    expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe('759375');
+                });
             });
 
             it('initializes some variables', () => {
                 editor.buffer.append('i + j + n + x + y + z');
                 editor.addSelectionForBufferRange([[0, 0], [0, Infinity]]);
 
-                atom.commands.dispatch(workspaceElement, 'eval-and-replace:'  + type);
+                atom.commands.dispatch(editorElement, 'eval-and-replace:coffee');
 
-                expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe('0');
+                waitsForPromise(() => activationPromise);
+
+                runs(() => {
+                    expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe('0');
+                });
             });
 
             it('provides a variable for the path of the open file', () => {
                 editor.buffer.append('filePath');
                 editor.addSelectionForBufferRange([[0, 0], [0, Infinity]]);
 
-                atom.commands.dispatch(workspaceElement, 'eval-and-replace:'  + type);
+                atom.commands.dispatch(editorElement, 'eval-and-replace:coffee');
 
-                expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe(editor.getPath());
+                waitsForPromise(() => activationPromise);
+
+                runs(() => {
+                    expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe(editor.getPath());
+                });
             });
 
             it('provides a variable for the name of the open file', () => {
                 editor.buffer.append('fileName');
                 editor.addSelectionForBufferRange([[0, 0], [0, Infinity]]);
 
-                atom.commands.dispatch(workspaceElement, 'eval-and-replace:'  + type);
+                atom.commands.dispatch(editorElement, 'eval-and-replace:coffee');
 
-                expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe(editor.getFileName());
+                waitsForPromise(() => activationPromise);
+
+                runs(() => {
+                    expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe(editor.getFileName());
+                });
             });
 
             it('uses the toString function of an returned object if helpful', () => {
                 editor.buffer.append('({ toString: () => "foo" })');
                 editor.addSelectionForBufferRange([[0, 0], [0, Infinity]]);
 
-                atom.commands.dispatch(workspaceElement, 'eval-and-replace:'  + type);
+                atom.commands.dispatch(editorElement, 'eval-and-replace:coffee');
 
-                expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe('foo');
+                waitsForPromise(() => activationPromise);
+
+                runs(() => {
+                    expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe('foo');
+                });
             });
 
             it('stringify an returned object if the toString function is not helpful', () => {
                 editor.buffer.append('({ foo: { a: 0, b: 1 } }).foo');
                 editor.addSelectionForBufferRange([[0, 0], [0, Infinity]]);
 
-                atom.commands.dispatch(workspaceElement, 'eval-and-replace:'  + type);
+                atom.commands.dispatch(editorElement, 'eval-and-replace:coffee');
 
-                expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe('{"a":0,"b":1}');
+                waitsForPromise(() => activationPromise);
+
+                runs(() => {
+                    expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe('{"a":0,"b":1}');
+                });
             });
 
             it('executes the selection from top to bottom', () => {
@@ -182,11 +224,15 @@ describe('EvalAndReplace', () => {
                 editor.addSelectionForBufferRange([[2, 0], [2, Infinity]]);
                 editor.addSelectionForBufferRange([[0, 0], [0, Infinity]]);
 
-                atom.commands.dispatch(workspaceElement, 'eval-and-replace:'  + type);
+                atom.commands.dispatch(editorElement, 'eval-and-replace:coffee');
 
-                expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe('0');
-                expect(editor.buffer.getTextInRange([[1, 0], [1, Infinity]])).toBe('1');
-                expect(editor.buffer.getTextInRange([[2, 0], [2, Infinity]])).toBe('2');
+                waitsForPromise(() => activationPromise);
+
+                runs(() => {
+                    expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe('0');
+                    expect(editor.buffer.getTextInRange([[1, 0], [1, Infinity]])).toBe('1');
+                    expect(editor.buffer.getTextInRange([[2, 0], [2, Infinity]])).toBe('2');
+                });
             });
         });
     });
@@ -200,53 +246,69 @@ describe('EvalAndReplace', () => {
             editor.buffer.append('git --version\n');
             editor.addSelectionForBufferRange([[2, 0], [2, 13]]);
 
-            atom.commands.dispatch(workspaceElement, 'eval-and-replace:shell');
+            atom.commands.dispatch(editorElement, 'eval-and-replace:shell');
 
-            const selectionRanges = editor.getSelections().map(s => s.getBufferRange());
-            expect(editor.buffer.getTextInRange([[0, 0], [0, 7]])).toBe('foo bar');
-            expect(selectionRanges[1].start.row).toBe(0);
-            expect(selectionRanges[1].start.column).toBe(0);
-            expect(selectionRanges[1].end.row).toBe(0);
-            expect(selectionRanges[1].end.column).toBe(7);
+            waitsForPromise(() => activationPromise);
 
-            expect(editor.buffer.getTextInRange([[1, 0], [1, Infinity]])).toMatch(/^(\/|\w:\\)/);
-            expect(selectionRanges[2].start.row).toBe(1);
-            expect(selectionRanges[2].start.column).toBe(0);
-            expect(selectionRanges[2].end.row).toBe(1);
-            expect(selectionRanges[2].end.column).toBeDefined();
+            runs(() => {
+                const selectionRanges = editor.getSelections().map(s => s.getBufferRange());
+                expect(editor.buffer.getTextInRange([[0, 0], [0, 7]])).toBe('foo bar');
+                expect(selectionRanges[1].start.row).toBe(0);
+                expect(selectionRanges[1].start.column).toBe(0);
+                expect(selectionRanges[1].end.row).toBe(0);
+                expect(selectionRanges[1].end.column).toBe(7);
 
-            expect(editor.buffer.getTextInRange([[2, 0], [2, Infinity]])).toMatch(/^git\s+/);
-            expect(selectionRanges[3].start.row).toBe(2);
-            expect(selectionRanges[3].start.column).toBe(0);
-            expect(selectionRanges[3].end.row).toBe(2);
-            expect(selectionRanges[3].end.column).toBeDefined();
+                expect(editor.buffer.getTextInRange([[1, 0], [1, Infinity]])).toMatch(/^(\/|\w:\\)/);
+                expect(selectionRanges[2].start.row).toBe(1);
+                expect(selectionRanges[2].start.column).toBe(0);
+                expect(selectionRanges[2].end.row).toBe(1);
+                expect(selectionRanges[2].end.column).toBeDefined();
+
+                expect(editor.buffer.getTextInRange([[2, 0], [2, Infinity]])).toMatch(/^git\s+/);
+                expect(selectionRanges[3].start.row).toBe(2);
+                expect(selectionRanges[3].start.column).toBe(0);
+                expect(selectionRanges[3].end.row).toBe(2);
+                expect(selectionRanges[3].end.column).toBeDefined();
+            });
         });
 
         it('passes the $PATH variable', () => {
             editor.buffer.append('echo $PATH');
             editor.addSelectionForBufferRange([[0, 0], [0, Infinity]]);
 
-            atom.commands.dispatch(workspaceElement, 'eval-and-replace:shell');
+            atom.commands.dispatch(editorElement, 'eval-and-replace:shell');
 
-            expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]]).trim()).not.toBe('');
+            waitsForPromise(() => activationPromise);
+
+            runs(() => {
+                expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]]).trim()).not.toBe('');
+            });
         });
 
         it('provides a variable for the path of the open file', () => {
             editor.buffer.append('echo $FILE_PATH');
             editor.addSelectionForBufferRange([[0, 0], [0, Infinity]]);
 
-            atom.commands.dispatch(workspaceElement, 'eval-and-replace:shell');
+            atom.commands.dispatch(editorElement, 'eval-and-replace:shell');
 
-            expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe(editor.getPath());
+            waitsForPromise(() => activationPromise);
+
+            runs(() => {
+                expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe(editor.getPath());
+            });
         });
 
         it('provides a variable for the name of the open file', () => {
             editor.buffer.append('echo $FILE_NAME');
             editor.addSelectionForBufferRange([[0, 0], [0, Infinity]]);
 
-            atom.commands.dispatch(workspaceElement, 'eval-and-replace:shell');
+            atom.commands.dispatch(editorElement, 'eval-and-replace:shell');
 
-            expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe(editor.getFileName());
+            waitsForPromise(() => activationPromise);
+
+            runs(() => {
+                expect(editor.buffer.getTextInRange([[0, 0], [0, Infinity]])).toBe(editor.getFileName());
+            });
         });
     });
 });
