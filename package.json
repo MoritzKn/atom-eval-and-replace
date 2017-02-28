@@ -36,5 +36,12 @@
       "eval-and-replace:js",
       "eval-and-replace:shell"
     ]
+  },
+  "configSchema": {
+    "customShell": {
+      "type": "string",
+      "default": "",
+      "description": "Path to an alternative shell used by eval-and-replace:shell e.g. /usr/bin/fish"
+    }
   }
 }
