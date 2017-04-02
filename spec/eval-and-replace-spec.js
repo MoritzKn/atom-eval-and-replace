@@ -2,7 +2,7 @@
 /* globals waitsForPromise */
 
 describe('EvalAndReplace', () => {
-    let workspaceElement, editorElement, editor, activationPromise;
+    let editor, editorElement, activationPromise;
 
     function lineRange(line) {
         return [[line, 0], [line, Infinity]];
@@ -13,8 +13,6 @@ describe('EvalAndReplace', () => {
     }
 
     beforeEach(() => {
-        workspaceElement = atom.views.getView(atom.workspace);
-
         waitsForPromise(() => atom.workspace.open('test.txt'));
 
         runs(() => {
@@ -23,6 +21,8 @@ describe('EvalAndReplace', () => {
             activationPromise = atom.packages.activatePackage('eval-and-replace');
 
             editor.setText('');
+
+            jasmine.attachToDOM(atom.views.getView(atom.workspace));
         });
     });
 
